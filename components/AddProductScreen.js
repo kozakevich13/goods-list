@@ -2,9 +2,10 @@ import React from "react";
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
 import { Formik } from "formik";
 import * as yup from "yup";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const validationSchema = yup.object().shape({
-  name: yup.string().required("Введіть назву товару"),
+  title: yup.string().required("Введіть назву товару"),
   price: yup
     .number()
     .required("Введіть ціну товару")
@@ -13,16 +14,38 @@ const validationSchema = yup.object().shape({
 });
 
 const AddProductScreen = () => {
-  const handleFormSubmit = (values) => {
-    console.log(values);
-    // Виконати додаткову логіку для збереження товару
+  const handleFormSubmit = async (values) => {
+    try {
+      const savedProducts = await AsyncStorage.getItem("products");
+      let products = [];
+      if (savedProducts) {
+        products = JSON.parse(savedProducts);
+      }
+
+      const newProduct = {
+        id: products.length + 1,
+        ...values,
+      };
+      products.push(newProduct);
+
+      await AsyncStorage.setItem("products", JSON.stringify(products));
+
+      navigation.navigate("ProductList");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Додати товар</Text>
       <Formik
-        initialValues={{ name: "", price: "", description: "" }}
+        initialValues={{
+          title: "",
+          price: "",
+          description: "",
+          image: "https://cataas.com/cat/says/hello%20world!",
+        }}
         validationSchema={validationSchema}
         onSubmit={handleFormSubmit}
       >
@@ -31,10 +54,10 @@ const AddProductScreen = () => {
             <TextInput
               style={styles.input}
               placeholder="Назва товару"
-              onChangeText={handleChange("name")}
-              value={values.name}
+              onChangeText={handleChange("title")}
+              value={values.title}
             />
-            {errors.name && <Text style={styles.error}>{errors.name}</Text>}
+            {errors.title && <Text style={styles.error}>{errors.title}</Text>}
 
             <TextInput
               style={styles.input}

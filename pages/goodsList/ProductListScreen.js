@@ -33,12 +33,9 @@ const ProductListScreen = ({ navigation }) => {
   }, []);
 
   const fetchProductsFromAPI = async () => {
-    console.log("fetchProductsFromAPI works");
     try {
       const response = await fetch(PRODUCTS_API);
       const data = await response.json();
-      console.log(data);
-
       await AsyncStorage.setItem("products", JSON.stringify(data));
       setProducts(data);
     } catch (error) {
