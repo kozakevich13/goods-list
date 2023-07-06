@@ -18,12 +18,10 @@ const ProductListScreen = ({ navigation }) => {
       try {
         const savedProducts = await AsyncStorage.getItem("products");
         if (savedProducts && savedProducts !== "") {
-          console.log("перша умова");
-          // Додано перевірку на пустий рядок
+          console.log("дані беруться з локального сховища");
           setProducts(JSON.parse(savedProducts));
         } else {
-          console.log("друга умова");
-
+          console.log("дані беруться з API");
           fetchProductsFromAPI();
         }
       } catch (error) {
@@ -32,7 +30,7 @@ const ProductListScreen = ({ navigation }) => {
     };
 
     checkSavedProducts();
-  }, []); // Додано products як залежність
+  }, []);
 
   const fetchProductsFromAPI = async () => {
     console.log("fetchProductsFromAPI works");
