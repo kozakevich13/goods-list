@@ -119,5 +119,5 @@ const styles = StyleSheet.create({
     color: "gray",
   },
 });
-
-export default ProductListScreen;
+const MemoizedProductListScreen = React.memo(ProductListScreen);
+export default MemoizedProductListScreen;

@@ -109,5 +109,5 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
 });
-
-export default AddProductScreen;
+const MemoizedAddProductScreen = React.memo(AddProductScreen);
+export default MemoizedAddProductScreen;

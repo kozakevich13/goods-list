@@ -68,5 +68,5 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
-
-export default ProductDetailsScreen;
+const MemoizedProductDetailsScreen = React.memo(ProductDetailsScreen);
+export default MemoizedProductDetailsScreen;
