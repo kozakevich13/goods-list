@@ -50,6 +50,10 @@ const ProductListScreen = ({ navigation }) => {
     navigation.navigate("ProductDetails", { productId: product.id });
   };
 
+  const handleAddProduct = () => {
+    navigation.navigate("AddProduct");
+  };
+
   const renderProductItem = ({ item }) => (
     <TouchableOpacity
       style={styles.productContainer}
@@ -64,7 +68,7 @@ const ProductListScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Список товарів</Text>
-      <TouchableOpacity style={styles.addButton}>
+      <TouchableOpacity style={styles.addButton} onPress={handleAddProduct}>
         <Text style={styles.addButtonLabel}>Додати товар</Text>
       </TouchableOpacity>
       <FlatList
