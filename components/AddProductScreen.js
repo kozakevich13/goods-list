@@ -13,7 +13,7 @@ const validationSchema = yup.object().shape({
   description: yup.string().required("Введіть опис товару"),
 });
 
-const AddProductScreen = () => {
+const AddProductScreen = ({ navigation }) => {
   const handleFormSubmit = async (values) => {
     try {
       const savedProducts = await AsyncStorage.getItem("products");
